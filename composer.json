@@ -1,0 +1,21 @@
+{
+  "name": "app/piadocas",
+  "description": "Uma Rede Social para rir de piadocas enfadonhas que não fazem muito sentido",
+  "authors": [
+    {
+      "name": "Pedro Augusto Pereira Florentino",
+      "email": "pedropereiraflorent@hotmail.com"
+    }
+  ],
+  "autoload": {
+      "psr-4": {
+          "App\\":"App/",
+          "Src\\": "src/"
+      },
+      "files": [
+        "config.php"
+      ]
+  },
+  "require": {
+  }
+}
