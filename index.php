@@ -1,9 +1,13 @@
 <?php
+  header('Content-Type: application/json');
   use App\Models\User;
   use App\Services\UserService;
   require_once './vendor/autoload.php';
-  echo "INDEX!";
+  
+  $result = UserService::routes($_REQUEST);
 
-echo "<pre>"; var_dump($_REQUEST); die;
-
-UserService::routes($_REQUEST);
+  if ($result === false) {
+    echo json_encode(["status" => 'erro', "data" => $result]); 
+  } else {
+    echo json_encode(["status" => 'sucesso', "data" => $result]);
+  }
