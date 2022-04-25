@@ -10,15 +10,16 @@
     {
       $con = Connection::getInstance();
       $sql = "SELECT * FROM ". self::$table;
-      if ($id !== 0) $sql." WHERE IdUser = :id";
+      if ($id !== 0) $sql = $sql." WHERE IdUser = :id";
       $stmt = $con->prepare($sql);
       if ($id !== 0) $stmt->bindValue( ':id', $id, \PDO::PARAM_INT);
+      
       $stmt->execute();
 
       if ($stmt->rowCount() > 0) {
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
       } else {
-        throw new \Exception("Nenhum usuário encontrado!");
+        return "Nenhum registro encontrado!";
       }
     }
 
@@ -47,16 +48,16 @@
       $stmt->execute();
 
       if ($stmt->rowCount() > 0) {
-        return true;
+        return "Sucesso ao cadastrar usuário!";
       } else {
-        throw new \Exception("Usuário não cadastrado");
+        return "Usuário não cadastrado!";
       }
       
     }
 
     public static function update(array $user) 
     {
-      if (!isset($user['IdUser'])) return false;
+      if (!isset($user['IdUser']) || empty($user['IdUser'])) return false;
       $con = Connection::getInstance();
 
       $sql = 'UPDATE '.self::$table.' SET';
@@ -73,17 +74,24 @@
 
       $stmt = $con->prepare($sql);
 
-      $stmt->bindValue( ':nome', $user['Nome'], \PDO::PARAM_STR);
-      $stmt->bindValue( ':email', $user['Email'], \PDO::PARAM_STR);
-      $stmt->bindValue( ':password', $user['Password'], \PDO::PARAM_STR);
+      if (isset($user['Nome'])) {
+        $stmt->bindValue( ':nome', $user['Nome'], \PDO::PARAM_STR);
+      }
+      if (isset($user['Email'])) { 
+        $stmt->bindValue( ':email', $user['Email'], \PDO::PARAM_STR);
+      }
+      if (isset($user['Password'])) { 
+        $stmt->bindValue( ':password', $user['Password'], \PDO::PARAM_STR);
+      }
+
       $stmt->bindValue( ':idUser', $user['IdUser'], \PDO::PARAM_INT);
 
       $stmt->execute();
 
       if ($stmt->rowCount() > 0) {
-        return true;
+        return [true, "Registro Atualizado!"];
       } else {
-        throw new \Exception("Usuário não atualizado");
+        return [false, "Registro não atualizado!"];
       }
 
     }
@@ -91,6 +99,7 @@
     public static function delete(int $id = 0) 
     {
       if ($id === 0) return false;
+
       $con = Connection::getInstance();
       $sql = " CALL deleteUser(:id);";
 
@@ -99,9 +108,9 @@
       $stmt->execute();
 
       if ($stmt->rowCount() > 0) {
-        return true;
+        return "Usuario deletado !";
       } else {
-        throw new \Exception("Erro ao excluir usuário!");
+        return false;
       }
     }
 
