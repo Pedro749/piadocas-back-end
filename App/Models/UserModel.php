@@ -1,8 +1,8 @@
 <?php
   namespace App\Models;
-  use Src\Connection\Connection;
+  use Src\Database\Connection\Connection;
 
-  class User
+  class UserModel
   {
     private static $table = 'users';
 
@@ -60,6 +60,13 @@
       if (!isset($user['IdUser']) || empty($user['IdUser'])) return false;
       $con = Connection::getInstance();
 
+      $sql = "SELECT * FROM ".self::$table." WHERE Email = :email ";
+      $stmt = $con->prepare($sql);
+      $stmt->bindValue( ':email', $user['Email'], \PDO::PARAM_STR);
+      $stmt->execute();
+
+      if ($stmt->rowCount() > 0) return "Email já utilizado!";
+
       $sql = 'UPDATE '.self::$table.' SET';
 
       if (isset($user['Nome'])) $sql = $sql.' Nome = :nome ,';
@@ -108,7 +115,7 @@
       $stmt->execute();
 
       if ($stmt->rowCount() > 0) {
-        return "Usuario deletado !";
+        return "Usuario deletado!";
       } else {
         return false;
       }

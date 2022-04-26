@@ -13,7 +13,7 @@
           "Src\\": "src/"
       },
       "files": [
-        "config.php"
+        "./config/config.php"
       ]
   },
   "require": {
