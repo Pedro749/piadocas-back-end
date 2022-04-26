@@ -1,10 +1,11 @@
 <?php
   header('Content-Type: application/json');
-  use App\Controllers\UserController;
-  use App\Controllers\PostController;
+  use Src\Controllers\UserController;
+  use Src\Controllers\PostController;
   require_once '../vendor/autoload.php';
   
   $result = false;
+  if (!isset($_REQUEST['url'])) return false;
   $endPoints = explode('/', $_REQUEST['url']);
   
   switch($endPoints[1]) {

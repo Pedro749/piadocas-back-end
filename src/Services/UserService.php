@@ -1,6 +1,6 @@
 <?php
-  namespace App\Services;
-  use App\Models\UserModel;
+  namespace Src\Services;
+  use Src\Models\UserModel;
 
   class UserService {
 
@@ -45,8 +45,21 @@
 
     public static function delete($params)
     {
-      if (!isset($params['id']) || empty($params['id'])) return false;
-      $result = UserModel::delete((int) $params['id']);
+      if (
+        !isset($params['iduser']) || 
+        !isset($params['password']) || 
+        !isset($params['email']) 
+      ) {
+        return false;
+      }
+
+      $userDelete = [
+        "Email" => $params['email'],
+        "Password" => $params['password'],
+        "IdUser" => (int) $params['iduser']
+      ];
+      
+      $result = UserModel::delete($userDelete);
       return $result;
     }
     

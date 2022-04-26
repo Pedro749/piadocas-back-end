@@ -1,6 +1,7 @@
 <?php
-  namespace App\Models;
-  use Src\Database\Connection\Connection;
+  namespace Src\Models;
+  use Src\Database\Database;
+  use Src\Models\UserModel;
 
   class PostModel
   {
@@ -8,7 +9,7 @@
 
     public static function select(int $id = 0) 
     {
-      $con = Connection::getInstance();
+      $con = Database::getInstance();
       $sql = "SELECT * FROM ". self::$table;
       if ($id !== 0) $sql = $sql." WHERE IdPost = :id";
       $stmt = $con->prepare($sql);
@@ -25,7 +26,7 @@
 
     public static function create(array $post = []) 
     {
-      $con = Connection::getInstance();
+      $con = Database::getInstance();
       if (!isset($post['IdUser']) || !isset($post['Post'])) return false;
       $sql = "INSERT INTO ".self::$table." 
                 (IdUser,  Post, Likes, DataCriacao)
@@ -54,7 +55,7 @@
       ) {
         return false;
       }
-      $con = Connection::getInstance();
+      $con = Database::getInstance();
 
       $sql = 'UPDATE '.self::$table.' 
                 SET Post = :post  
@@ -80,11 +81,23 @@
     public static function delete(array  $post = []) 
     {
       if ($post === []) return false;
-      if (!isset($post['IdUser']) || !isset($post['IdPost'])) {
+      if (
+        !isset($post['Password']) || 
+        !isset($post['IdPost']) ||
+        !isset($post['Email'])
+      ) {
         return false;
       }
+
+      $autenticar = [
+        "Email" => $post['Email'],
+        "Password" => $post['Password']
+      ];
       
-      $con = Connection::getInstance();
+      
+      if (!UserModel::login($autenticar)) return false;
+      
+      $con = Database::getInstance();
       $sql = "DELETE FROM likes WHERE IdPost = :idPost;";
       $stmt = $con->prepare($sql);
       $stmt->bindValue( ':idPost', $post['IdPost'], \PDO::PARAM_INT);
@@ -107,7 +120,7 @@
     {
       if (!isset($post['IdPost']) || !isset($post['IdUserLike']) ) return false;
 
-      $con = Connection::getInstance();
+      $con = Database::getInstance();
       $sql = 'CALL likeUpdate(:idUserLike, :idPost)';
       $stmt = $con->prepare($sql);
       $stmt->bindValue( ':idUserLike', $post['IdUserLike'], \PDO::PARAM_INT);

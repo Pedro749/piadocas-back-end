@@ -1,6 +1,6 @@
 <?php
-  namespace App\Controllers;
-  use App\Services\UserService;
+  namespace Src\Controllers;
+  use Src\Services\UserService;
 
   class UserController {
 

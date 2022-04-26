@@ -1,6 +1,6 @@
 <?php
-  namespace App\Models;
-  use Src\Database\Connection\Connection;
+  namespace Src\Models;
+  use Src\Database\Database;
 
   class UserModel
   {
@@ -8,7 +8,7 @@
 
     public static function select(int $id = 0) 
     {
-      $con = Connection::getInstance();
+      $con = Database::getInstance();
       $sql = "SELECT * FROM ". self::$table;
       if ($id !== 0) $sql = $sql." WHERE IdUser = :id";
       $stmt = $con->prepare($sql);
@@ -25,7 +25,7 @@
 
     public static function create(array $user = []) 
     {
-      $con = Connection::getInstance();
+      $con = Database::getInstance();
       if (!isset($user['Nome']) || !isset($user['Email']) || !isset($user['Password'])) return false;
 
       $sql = "SELECT * FROM ".self::$table." WHERE Email = :email ";
@@ -58,7 +58,7 @@
     public static function update(array $user) 
     {
       if (!isset($user['IdUser']) || empty($user['IdUser'])) return false;
-      $con = Connection::getInstance();
+      $con = Database::getInstance();
 
       $sql = "SELECT * FROM ".self::$table." WHERE Email = :email ";
       $stmt = $con->prepare($sql);
@@ -103,15 +103,27 @@
 
     }
 
-    public static function delete(int $id = 0) 
+    public static function delete(array $user = []) 
     {
-      if ($id === 0) return false;
+      if (
+        !isset($user['IdUser']) || 
+        !isset($user['Password']) || 
+        !isset($user['Email'])
+      ) {
+        return false;
+      }
+      $autenticar = [
+        "Email" => $user['Email'],
+        "Password" => $user['Password']
+      ];
 
-      $con = Connection::getInstance();
+      if (!UserModel::login($autenticar)) return false;
+
+      $con = Database::getInstance();
       $sql = " CALL deleteUser(:id);";
 
       $stmt = $con->prepare($sql);
-      $stmt->bindValue( ':id', $id, \PDO::PARAM_INT);
+      $stmt->bindValue( ':id', $user['IdUser'], \PDO::PARAM_INT);
       $stmt->execute();
 
       if ($stmt->rowCount() > 0) {
@@ -124,17 +136,16 @@
     public static function login(array $user = []) 
     {
       if (empty($user)) return false;
-
-      $con = Connection::getInstance();
+      $con = Database::getInstance();
       $sql = 'SELECT * FROM users WHERE Email = :email';
       $stmt = $con->prepare($sql);
       $stmt->bindValue( ':email', $user['Email'], \PDO::PARAM_STR);
       $stmt->execute();
-
+      
       if ($stmt->rowCount() === 0) return false;
 
       $dataUser = $stmt->fetch(\PDO::FETCH_ASSOC);
-
+      
       if (!isset($user['Password']) || !isset($dataUser['Password'])) return false;
       if (password_verify($user['Password'] , $dataUser['Password'])) {
        return true;

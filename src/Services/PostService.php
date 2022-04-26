@@ -1,6 +1,6 @@
 <?php
-  namespace App\Services;
-  use App\Models\PostModel;
+  namespace Src\Services;
+  use Src\Models\PostModel;
 
   class PostService {
 
@@ -44,10 +44,20 @@
 
     public static function delete($params)
     {
-      if (!isset($params['iduser']) || !isset($params['idpost'])) return false;
+      if (
+          !isset($params['iduser']) || 
+          !isset($params['idpost']) ||
+          !isset($params['email']) ||
+          !isset($params['password']) 
+      ) {
+        return false;
+      }
+      
       $deletePost = [
         "IdUser" => (int) $params['iduser'],
-        "IdPost" => (int) $params['idpost']
+        "IdPost" => (int) $params['idpost'],
+        "Email" => $params['email'],
+        "Password" => $params['password']
       ];
       $result = PostModel::delete($deletePost);
       return $result;
