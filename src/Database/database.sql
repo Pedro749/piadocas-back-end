@@ -1,15 +1,7 @@
 
-/*!40101 SET NAMES utf8 */;
+CREATE DATABASE piadocas;
 
-/*!40101 SET SQL_MODE=''*/;
-
-/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
-/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
-/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
-/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`piadocas` /*!40100 DEFAULT CHARACTER SET utf8 */;
-
-USE `piadocas`;
+USE piadocas;
 
 /*Table structure for table `likes` */
 
@@ -54,13 +46,12 @@ CREATE TABLE `users` (
   PRIMARY KEY (`IdUser`,`Email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
-/* Procedure structure for procedure `deleteUser` */
 
-/*!50003 DROP PROCEDURE IF EXISTS  `deleteUser` */;
+DROP PROCEDURE IF EXISTS  `deleteUser`;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteUser`(Id INT)
+ CREATE DEFINER=`root`@`localhost` PROCEDURE `deleteUser`(Id INT)
 BEGIN
 	SET FOREIGN_KEY_CHECKS=OFF; 
 	if (select count(*) from likes where IdUserLike = Id ) > 0 then
@@ -73,16 +64,16 @@ BEGIN
 		DELETE FROM users WHERE IdUser = Id;
 	END IF;
 	SET FOREIGN_KEY_CHECKS=ON;
-    END */$$
+    END $$
 DELIMITER ;
 
 /* Procedure structure for procedure `likeUpdate` */
 
-/*!50003 DROP PROCEDURE IF EXISTS  `likeUpdate` */;
+DROP PROCEDURE IF EXISTS  `likeUpdate`;
 
 DELIMITER $$
 
-/*!50003 CREATE DEFINER=`root`@`localhost` PROCEDURE `likeUpdate`(LikeIdUser int, PostLikedId int)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `likeUpdate`(LikeIdUser int, PostLikedId int)
 BEGIN
 	if (select count(*) from likes where IdUserLike = LikeIdUser and IdPost = PostLikedId) = 0 then
 	Insert into likes (IdUserLike, IdPost, DataCriacao, md5_hash) 
@@ -91,10 +82,5 @@ BEGIN
 	update posts set likes = (select count(*) from likes WHERE IdPost = PostLikedId) where
 	posts.IdPost = PostLikedId;
 	end if;
-    END */$$
+    END $$
 DELIMITER ;
-
-/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
-/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
-/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
-/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;

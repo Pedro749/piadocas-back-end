@@ -1,7 +1,7 @@
 <?php
-    namespace Src\Database\Connection;
+    namespace Src\Database;
 
-    class Connection {
+    class Database {
 
         public static $instance;
 

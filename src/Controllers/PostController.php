@@ -1,6 +1,6 @@
 <?php
-  namespace App\Controllers;
-  use App\Services\PostService;
+  namespace Src\Controllers;
+  use Src\Services\PostService;
 
   class PostController {
 
