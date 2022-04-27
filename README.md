@@ -63,7 +63,7 @@ For 'Piadocas' I created two main routes that deal with '/user/' and '/post/' th
 - localhost/src/**`api`**/**`post`**/**`create`**&`iduser`=1&`post`='O que o pato disse para a pata? R.: Vem Quá!' - Register a new post.
 - localhost/src/**`api`**/**`post`**/**`update`**&`iduser`=1&`IdPost`=1&`post`='O que é o que é' - Update a post.
 - localhost/src/**`api`**/**`post`**/**`delete`**&`idpost`=1&`email`=pedro@augusto.com&`password`=123 - Deletr a post.
-- localhost/src/**`api`**/**post**/**`like`**&`iduserlike`=1&`idpost`=1 - Interact with a post through the like.
+- localhost/src/**`api`**/**`post`**/**`like`**&`iduserlike`=1&`idpost`=1 - Interact with a post through the like.
 
 
 ------------------
