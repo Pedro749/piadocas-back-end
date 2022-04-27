@@ -56,7 +56,7 @@ For 'Piadocas' I created two main routes that deal with '/user/' and '/post/' th
 - localhost/src/api/**`user`**/**`delete`**&`iduser`=1&`email`=pedro@augusto.com&`password`=123 - Delete a user.
 - localhost/src/api/**`user`**/**`login`**&`email`=pedro@augusto.com&`password`=123 - Authenticates user data.
 
-### poset
+### post
 
 - localhost/src/**`api`**/**`post`**/**`select`** - Returns all posts registered in the database.
 - localhost/src/**`api`**/**`post`**/**`select`**&`id`=1 - Returns a specific post.
