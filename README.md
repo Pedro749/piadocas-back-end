@@ -49,21 +49,21 @@ For 'Piadocas' I created two main routes that deal with '/user/' and '/post/' th
 
 ### user
 
-- localhost/src/**api**/**user**/**select** - 
-- localhost/src/**api**/**user**/**select**&`id`=1 - Returns all users registered in the database.
-- localhost/src/**api**/**user**/**create**&`name`=pedro&`email`=pedro@augusto.com&`password`=123 - Register a new user.
-- localhost/src/api/**user**/**update**&`iduser`=1&`name`=florentino&`email`=augusto@pedro.com&`password`=234 - Updates the user data, being mandatory only the iduser and some of the other parameters that will be updated.
-- localhost/src/api/**user**/**delete**&i**duser**=1&`email`=pedro@augusto.com&`password`=123 - Delete a user.
-- localhost/src/api/**user**/**login**&`email`=pedro@augusto.com&`password`=123 - Authenticates user data.
+- localhost/src/**`api`**/**`user`**/**`select`** - 
+- localhost/src/**`api`**/**`user`**/**`select`**&`id`=1 - Returns all users registered in the database.
+- localhost/src/**`api`**/**`user`**/**`create`**&`name`=pedro&`email`=pedro@augusto.com&`password`=123 - Register a new user.
+- localhost/src/**`api`**/**`user`**/**`update`**&`iduser`=1&`name`=florentino&`email`=augusto@pedro.com&`password`=234 - Updates the user data, being mandatory only the iduser and some of the other parameters that will be updated.
+- localhost/src/api/**`user`**/**`delete`**&`iduser`=1&`email`=pedro@augusto.com&`password`=123 - Delete a user.
+- localhost/src/api/**`user`**/**`login`**&`email`=pedro@augusto.com&`password`=123 - Authenticates user data.
 
 ### poset
 
-- localhost/src/**api**/**post**/**select** - Returns all posts registered in the database.
-- localhost/src/**api**/**post**/**select**&`id`=1 - Returns a specific post.
-- localhost/src/**api**/**post**/**create**&`iduser`=1&`post`='O que o pato disse para a pata? R.: Vem Quá!' - Register a new post.
-- localhost/src/**api**/**post**/**update**&`iduser`=1&`IdPost`=1&`post`='O que é o que é' - Update a post.
-- localhost/src/**api**/**post**/**delete**&`idpost`=1&`email`=pedro@augusto.com&`password`=123 - Deletr a post.
-- localhost/src/**api**/**post**/**like**&`iduserlike`=1&`idpost`=1 - Interact with a post through the like.
+- localhost/src/**`api`**/**`post`**/**`select`** - Returns all posts registered in the database.
+- localhost/src/**`api`**/**`post`**/**`select`**&`id`=1 - Returns a specific post.
+- localhost/src/**`api`**/**`post`**/**`create`**&`iduser`=1&`post`='O que o pato disse para a pata? R.: Vem Quá!' - Register a new post.
+- localhost/src/**`api`**/**`post`**/**`update`**&`iduser`=1&`IdPost`=1&`post`='O que é o que é' - Update a post.
+- localhost/src/**`api`**/**`post`**/**`delete`**&`idpost`=1&`email`=pedro@augusto.com&`password`=123 - Deletr a post.
+- localhost/src/**`api`**/**post**/**`like`**&`iduserlike`=1&`idpost`=1 - Interact with a post through the like.
 
 
 ------------------
