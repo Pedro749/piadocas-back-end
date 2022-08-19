@@ -4,15 +4,13 @@
 
   class UserService {
 
-    public static function select($params) 
-    {
+    public static function select($params) {
       $id = isset($params['id']) ? $params['id'] : null;
       $result = UserModel::select((int) $id);
       return $result;
     }
     
-    public static function create($params)
-    {
+    public static function create($params) {
       if (!isset($params['name']) || 
           !isset($params['email']) || 
           !isset($params['password'])
@@ -29,8 +27,7 @@
       return $result;
     }
 
-    public static function update($params)
-    {
+    public static function update($params) {
       if (!isset($params['iduser'])) return false;
 
       $updateUser = [
@@ -43,8 +40,7 @@
       return $result;
     }
 
-    public static function delete($params)
-    {
+    public static function delete($params) {
       if (
         !isset($params['iduser']) || 
         !isset($params['password']) || 
@@ -63,8 +59,7 @@
       return $result;
     }
     
-    public static function login($params)
-    {
+    public static function login($params) {
       if (!isset($params['email']) || !isset($params['password'])) {
         return false;
       }

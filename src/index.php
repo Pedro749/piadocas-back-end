@@ -5,7 +5,9 @@
   require_once '../vendor/autoload.php';
   
   $result = false;
+
   if (!isset($_REQUEST['url'])) return false;
+  
   $endPoints = explode('/', $_REQUEST['url']);
   
   switch($endPoints[1]) {

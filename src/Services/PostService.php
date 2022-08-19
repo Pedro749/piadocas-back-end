@@ -70,6 +70,7 @@
         'IdUserLike' => $params['iduserlike'], 
         "IdPost" => $params['idpost']
       ];
+      
       $result = PostModel::like($dataPost);
       return $result;
     }
