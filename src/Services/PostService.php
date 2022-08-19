@@ -2,17 +2,16 @@
   namespace Src\Services;
   use Src\Models\PostModel;
 
-  class PostService {
+  class PostService 
+  {
 
-    public static function select($params) 
-    {
+    public static function select($params) {
       $id = isset($params['idpost']) ? $params['idpost'] : null;
       $result = PostModel::select((int) $id);
       return $result;
     }
     
-    public static function create($params)
-    {
+    public static function create($params) {
       if (!isset($params['iduser']) || 
           !isset($params['post']) 
       ) {
@@ -27,8 +26,7 @@
       return $result;
     }
 
-    public static function update($params)
-    {
+    public static function update($params) {
       if (!isset($params['iduser']) || !isset($params['idpost']) ) {
         return false;
       }
@@ -38,12 +36,12 @@
         "IdPost" =>  (int) $params['idpost'],
         "Post" => isset($params['post']) ? $params['post'] : ""
       ];
+
       $result = PostModel::update($updatePost);
       return $result;
     }
 
-    public static function delete($params)
-    {
+    public static function delete($params) {
       if (
           !isset($params['iduser']) || 
           !isset($params['idpost']) ||
@@ -63,8 +61,7 @@
       return $result;
     }
     
-    public static function like($params)
-    {
+    public static function like($params) {
       if (!isset($params['iduserlike']) || !isset($params['idpost'])) {
         return false;
       }
